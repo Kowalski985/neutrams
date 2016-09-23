@@ -1,3 +1,4 @@
+from compiler.ast import flatten
 import logging
 import os
 import pickle
@@ -5,6 +6,7 @@ import pickle
 import itertools
 import numpy
 import theano
+import matplotlib.pyplot as plt
 
 
 def transfer_data(directory, io_precision):
@@ -100,6 +102,24 @@ def sparse_weight(w, size):
             for m_row, m_col in itertools.product(row_indices[m_group], col_indices[m_group]):
                 m_group_sum += abs(w[m_row][m_col])
         return m_group_sum
+
+    def draw_matrix(figure_number):
+        order_w = [
+            [
+                abs(w[m_row][m_col])
+                for m_row in flatten(row_indices)
+            ]
+            for m_col in flatten(col_indices)
+        ]
+        plt.figure(figure_number)
+        plt.clf()
+        plt.title("Weight matrix sparsification")
+        plt.imshow(order_w)
+        plt.colorbar(orientation='horizontal')
+        plt.pause(0.001)
+
+    matrix_figure = plt.figure().number
+    plt.get_current_fig_manager().window.showMaximized()
 
     iteration = 0
 
@@ -253,6 +273,7 @@ def sparse_weight(w, size):
             for row in range(rows):
                 row_group_sum[row][from_group] -= abs(w[row][from_col_absolute_index])
                 row_group_sum[row][to_group] += abs(w[row][from_col_absolute_index])
+        draw_matrix(matrix_figure)
     w_mask = numpy.zeros(w.shape)
     for group in range(n_group):
         for row, col in itertools.product(row_indices[group], col_indices[group]):

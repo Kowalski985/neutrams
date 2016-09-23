@@ -4,6 +4,7 @@ import pickle
 
 import numpy
 import theano.tensor as tensor
+import matplotlib.pyplot as plt
 
 from train.net import MLPNet
 from train.solver import SGDSolver
@@ -31,6 +32,7 @@ solver = SGDSolver(
 # mnist.pkl is available for download here(http://deeplearning.net/data/mnist/mnist.pkl.gz)
 with open(os.path.join("..", "data", "mnist.pkl"), "rb") as f:
     train_set, valid_set, test_set = pickle.load(f)
+
 solver.solve(train_set=train_set, valid_set=valid_set, test_set=test_set)
 net.save_blobs(train_set[0], "train")
 net.save_blobs(valid_set[0], "valid")

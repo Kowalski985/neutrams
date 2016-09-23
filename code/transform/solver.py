@@ -1,5 +1,4 @@
 import logging
-import os
 
 import matplotlib.pyplot as plt
 import numpy
@@ -35,8 +34,8 @@ class SGDSolver(object):
         self.display = display
         self.snapshot = snapshot
 
-    def solve(self, train_set, valid_set, test_set):
-        # type: (tuple, tuple, tuple) -> None
+    def solve(self, train_set, valid_set, test_set, train_figure, title):
+        # type: (tuple, tuple, tuple, number) -> None
         """Solve the optimization.
 
         Args:
@@ -99,12 +98,6 @@ class SGDSolver(object):
         valid_errors = []
         test_errors = []
 
-        train_figure = -1
-        if self.display > 0:
-            train_figure = plt.figure().number
-            plt.figure(train_figure)
-            plt.ion()
-
         logging.info("Start training")
 
         for epoch in xrange(self.max_epoch):
@@ -130,6 +123,7 @@ class SGDSolver(object):
             if self.display > 0 and (epoch + 1) % self.display == 0:
                 plt.figure(train_figure)
                 plt.clf()
+                plt.title(title)
                 plt.plot(train_errors, label="train")
                 plt.plot(valid_test_index, valid_errors, label="valid")
                 plt.plot(valid_test_index, test_errors, label="test")
@@ -169,7 +163,7 @@ class IntSGDSolver(object):
         self.display = display
         self.snapshot = snapshot
 
-    def solve(self, train_set, valid_set, test_set):
+    def solve(self, train_set, valid_set, test_set, train_figure, title):
         # type: (tuple, tuple, tuple) -> None
         """Solve the optimization.
 
@@ -233,12 +227,6 @@ class IntSGDSolver(object):
         valid_errors = []
         test_errors = []
 
-        train_figure = -1
-        if self.display > 0:
-            train_figure = plt.figure().number
-            plt.figure(train_figure)
-            plt.ion()
-
         logging.info("Start training")
 
         for epoch in xrange(self.max_epoch):
@@ -264,6 +252,7 @@ class IntSGDSolver(object):
             if self.display > 0 and (epoch + 1) % self.display == 0:
                 plt.figure(train_figure)
                 plt.clf()
+                plt.title(title)
                 plt.plot(train_errors, label="train")
                 plt.plot(valid_test_index, valid_errors, label="valid")
                 plt.plot(valid_test_index, test_errors, label="test")
