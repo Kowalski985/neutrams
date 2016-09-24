@@ -31,7 +31,7 @@ transformer.transform_fp(
     index=1,
     insert_layers=None,
     batch_size=100,
-    max_epoch=10,
+    max_epoch=100,
     learning_rate=1e-5,
     momentum=0.,
     weight_decay=0.00001,
