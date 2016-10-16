@@ -2,4 +2,4 @@ This project includes experimental code of NEUTRAMS v1 (described in MICRO2016 p
 
 NEUTRAMS v1 is only an experimental concept. It works well on small networks.
 
-NEUTRAMS v2 for large networks  is still in development.
+NEUTRAMS v2 for large networks is still under development. We will release it here when finished.
